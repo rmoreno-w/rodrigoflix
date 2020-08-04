@@ -1,64 +1,68 @@
-import React, {useState} from 'react'
-import PageDefault from '../../PageDefault'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import PageDefault from '../../PageDefault';
 import FormField from '../../../components/FormField';
+import Button from '../../../components/Button';
 
 function CadastroCategoria() {
-    
-    const objInicialCategorias = {
-        nome: '',
-        descricao: '',
-        cor: ''
-    }
+  const objInicialCategorias = {
+    nome: '',
+    descricao: '',
+    cor: '',
+  };
 
-    const [novaCategoria, setNovaCategoria] = useState(objInicialCategorias);
+  const [novaCategoria, setNovaCategoria] = useState(objInicialCategorias);
 
-    const [categorias, setCategorias] = useState([]);
+  const [categorias, setCategorias] = useState([]);
 
-    function setNovaCat(chave, valor) {
-        setNovaCategoria({...novaCategoria,
-        [chave]: valor});   // [] é a forma de fazer a atribuicao do valor da chave também ser dinamico
-    }
+  function setNovaCat(chave, valor) {
+    setNovaCategoria({
+      ...novaCategoria,
+      [chave]: valor,
+    }); // [] é a forma de fazer a atribuicao do valor da chave também ser dinamico
+  }
 
-    function funcaoDisparada (evento) {
-        setNovaCat(evento.target.getAttribute('name'),
-        evento.target.value)
-    }
-    
-    return (
-        <PageDefault>
-             <h1>Cadastro de Categoria {categorias.nome}</h1>
+  function funcaoDisparada(evento) {
+    setNovaCat(evento.target.getAttribute('name'),
+      evento.target.value);
+  }
 
-                <form onSubmit={function handleSubmit(info){
-                    info.preventDefault();
-                    setCategorias([
-                        ...categorias,novaCategoria]);
+  return (
+    <PageDefault>
+      <h1>
+        Cadastro de Categoria
+        {categorias.nome}
+      </h1>
 
-                    setNovaCategoria(objInicialCategorias)
-                    }}>
-                    
-                    <FormField label="Nome da Categoria: " name="nome" type="text" value={novaCategoria.nome} onChange={funcaoDisparada}/>
+      <form onSubmit={function handleSubmit(info) {
+        info.preventDefault();
+        setCategorias([
+          ...categorias, novaCategoria]);
 
-                    <FormField label="Descrição: " name="descricao" type="textarea" value={novaCategoria.descricao} onChange={funcaoDisparada}/>
+        setNovaCategoria(objInicialCategorias);
+      }}
+      >
 
-                    <FormField label="Cor: " name="cor" type="color" value={novaCategoria.cor} onChange={funcaoDisparada}/>
+        <FormField label="Nome da Categoria" name="nome" type="text" value={novaCategoria.nome} onChange={funcaoDisparada} />
 
-                    <button>Cadastrar</button>
-                </form>
+        <FormField label="Descrição" name="descricao" type="textarea" value={novaCategoria.descricao} onChange={funcaoDisparada} />
 
-                <ul>
-                    { categorias.map((cat, indice) => {
-                        return (
-                            <li key={`${cat}${indice}`}>{cat.nome}</li>
-                        )
-                    })}
-                </ul>
+        <FormField label="Cor" name="cor" type="color" value={novaCategoria.cor} onChange={funcaoDisparada} />
 
-             <Link to="/">
-                 Home
-             </Link>
-        </PageDefault>
-    )
+        <Button>Cadastrar</Button>
+      </form>
+
+      <ul>
+        { categorias.map((cat, indice) => (
+          <li key={`${cat}${indice}`}>{cat.nome}</li>
+        ))}
+      </ul>
+
+      <Link to="/">
+        Home
+      </Link>
+    </PageDefault>
+  );
 }
 
 export default CadastroCategoria;
