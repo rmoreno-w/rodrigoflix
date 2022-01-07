@@ -12,17 +12,14 @@ const Main = styled.main`
     padding-right: 5%;
 `;
 
-function PageDefault({children}) {
-
+function PageDefault({ children }) {
     return (
         <>
-        <Menu/>
-        
-        <Main>
-        {children}
-        </Main>
+            <Menu />
 
-        <Footer/>
+            <Main>{children}</Main>
+
+            <Footer />
         </>
     );
 }
