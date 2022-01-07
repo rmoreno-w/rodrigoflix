@@ -71,19 +71,87 @@ const Input = styled.input`
     }}
 `;
 
-function FormField({ label, type, name, value, onChange }) {
+const Select = styled.select`
+    background: #53585d;
+    color: #f5f5f5;
+    display: block;
+    width: 100%;
+    height: 57px;
+    font-size: 18px;
+
+    outline: 0;
+    border: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid #53585d;
+
+    padding: 16px 16px;
+    margin-bottom: 45px;
+
+    resize: none;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+
+    &:focus {
+        border-bottom-color: var(--primary);
+    }
+
+    &:focus + ${Label.Text} {
+        transform: scale(0.6) translateY(-10px);
+    }
+    ${({ value }) => {
+        const hasValue = value.length > 0;
+        return (
+            hasValue &&
+            css`
+                &:not([type='color']) + ${Label.Text} {
+                    transform: scale(0.6) translateY(-10px);
+                }
+            `
+        );
+    }}
+`;
+
+function FormField({ label, type, name, value, onChange, categoryList }) {
     const fieldID = `id_${name}`;
 
-    // Cria a variavel isTextArea que vai receber a variavel tipo por parametro e compara com o string, recebendo true ou false
-    const isTextArea = type === 'textarea';
-    const tag = isTextArea ? 'textarea' : 'input';
+    // Cria a variavel tagType que compara o tipo recebido com os campos do objeto e denota a tag HTML a ser criada
+    const tagType = {
+        textarea: 'textarea',
+        select: 'select',
+        text: 'input',
+    };
+    const tag = tagType[type];
 
     return (
         <FormFieldWrapper>
-            <Label htmlFor={fieldID}>
-                <Input as={tag} id={fieldID} value={value} type={type} name={name} onChange={onChange} />
-                <Label.Text>{label}:</Label.Text>
-            </Label>
+            {tag === 'select' ? (
+                <Label htmlFor={fieldID}>
+                    <Select name={name} id={fieldID} value={value} onChange={onChange}>
+                        <option value='' hidden>
+                            {' '}
+                        </option>
+                        {categoryList.map((categoria) => (
+                            <option key={categoria.id} value={categoria.titulo}>
+                                {categoria.titulo}
+                            </option>
+                        ))}
+                    </Select>
+                    <Label.Text>{label}:</Label.Text>
+                </Label>
+            ) : (
+                <Label htmlFor={fieldID}>
+                    <Input
+                        as={tag}
+                        id={fieldID}
+                        value={value}
+                        type={type}
+                        name={name}
+                        onChange={onChange}
+                        categoryList={categoryList}
+                    />
+                    <Label.Text>{label}:</Label.Text>
+                </Label>
+            )}
         </FormFieldWrapper>
     );
 }

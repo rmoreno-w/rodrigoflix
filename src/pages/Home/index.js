@@ -1,29 +1,41 @@
-import React from 'react';
-import dadosIniciais from '../../data/dados_iniciais.json';
+import React, { useEffect, useState } from 'react';
 import BannerMain from '../../components/BannerMain';
 import Carousel from '../../components/Carousel';
 import PageDefault from '../PageDefault';
-
+import categoriasRepository from '../../repositories/categorias';
 
 function Home() {
-  return (
-    <>
-    <PageDefault>
-    <BannerMain url="https://www.youtube.com/watch?v=vStgnVQtyeA&t=9628s" 
-    videoDescription="Entrevista com o streamer Gaules. O cara é exemplo de resiliência e tenho como meta de vida ser uma pessoa tão resiliente como ele!"
-    videoTitle="Entrevista Gaulês - Flow Podcast"/>
+    const [dadosIniciais, setDadosIniciais] = useState([]);
 
-    <Carousel ignoreFirstVideo="True" category={dadosIniciais.categorias[0]}/>
+    useEffect(() => {
+        categoriasRepository
+            .getAllCategsWithVideos()
+            .then((categorias) => {
+                setDadosIniciais(categorias);
+            })
+            .catch((error) => {
+                console.log('TRATAR ERRO AQUI', error);
+            });
+    }, []);
 
-    <Carousel category={dadosIniciais.categorias[1]}/>
-    <Carousel category={dadosIniciais.categorias[2]}/>
-    <Carousel category={dadosIniciais.categorias[3]}/>
-    <Carousel category={dadosIniciais.categorias[4]}/>
-    <Carousel category={dadosIniciais.categorias[5]}/>
-
-    </PageDefault>
-    </>
-  );
+    return (
+        <PageDefault>
+            {dadosIniciais.length === 0 ? (
+                <div>Carregando</div>
+            ) : (
+                <>
+                    <BannerMain
+                        url='https://www.youtube.com/watch?v=vStgnVQtyeA&t=9628s'
+                        videoDescription='Entrevista com o streamer Gaules. O cara é exemplo de resiliência e tenho como meta de vida ser uma pessoa tão resiliente como ele!'
+                        videoTitle='Entrevista Gaulês - Flow Podcast'
+                    />
+                    {dadosIniciais.map((_, index) => (
+                        <Carousel index={index} category={dadosIniciais[index]} />
+                    ))}
+                </>
+            )}
+        </PageDefault>
+    );
 }
 
 export default Home;
