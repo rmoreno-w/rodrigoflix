@@ -1,8 +1,9 @@
 import config from '../config';
+import { Video } from '../hooks';
 
 const CATEGORIES_URL = `${config.URL_BACKEND}/videos`;
 
-const insertVideo = (dadosDoVideo) =>
+const insertVideo = (dadosDoVideo: Video) =>
     fetch(`${CATEGORIES_URL}?_embed=videos`, {
         method: 'POST',
         headers: {

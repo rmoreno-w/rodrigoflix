@@ -6,6 +6,7 @@ import useForm from '../../../hooks';
 import PageDefault from '../../PageDefault';
 import videosRepository from '../../../repositories/videos';
 import categoriasRepository from '../../../repositories/categorias';
+import { Categoria } from '../../../components/Carousel';
 
 function CadastroVideo() {
     const history = useHistory();
@@ -14,15 +15,17 @@ function CadastroVideo() {
         url: '',
         categoria: '',
     });
-    const [categoriasCadastradas, setCategoriasCadastradas] = useState([]);
+    const [categoriasCadastradas, setCategoriasCadastradas] = useState<Categoria[]>([]);
 
     useEffect(() => {
         categoriasRepository
             .getAllCategs()
-            .then((categorias) => {
+            .then((categorias: Categoria[]) => {
                 setCategoriasCadastradas(categorias);
             })
+            // eslint-disable-next-line no-unused-vars
             .catch((error) => {
+                // eslint-disable-next-line no-console
                 console.log('erro pegando categoria');
             });
     }, []);
@@ -41,21 +44,24 @@ function CadastroVideo() {
                     const categoriaEscolhida = categoriasCadastradas.find(
                         (categoria) => categoria.titulo === valores.categoria
                     );
-                    console.log(categoriaEscolhida);
 
-                    videosRepository
-                        .insertVideo({
-                            titulo: valores.titulo,
-                            url: valores.url,
-                            categoriaId: categoriaEscolhida.id,
-                        })
-                        .then(() => {
-                            alert('Video Cadastrado com Sucesso!!1');
-                            history.push('/');
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                        });
+                    // eslint-disable-next-line no-unused-expressions
+                    categoriaEscolhida &&
+                        videosRepository
+                            .insertVideo({
+                                titulo: valores.titulo,
+                                url: valores.url,
+                                categoria: categoriaEscolhida.id,
+                            })
+                            .then(() => {
+                                // eslint-disable-next-line no-alert
+                                alert('Video Cadastrado com Sucesso!!1');
+                                history.push('/');
+                            })
+                            .catch((error) => {
+                                // eslint-disable-next-line no-console
+                                console.log(error);
+                            });
                 }}
             >
                 <FormField
@@ -63,10 +69,16 @@ function CadastroVideo() {
                     name='titulo'
                     type='text'
                     value={valores.titulo}
-                    onChange={handleMudancas}
+                    onChange={(e) => handleMudancas('titulo', e)}
                 />
 
-                <FormField label='URL do Video' name='url' type='text' value={valores.url} onChange={handleMudancas} />
+                <FormField
+                    label='URL do Video'
+                    name='url'
+                    type='text'
+                    value={valores.url}
+                    onChange={(e) => handleMudancas('url', e)}
+                />
 
                 <FormField
                     label='Categoria do Video'
@@ -74,7 +86,7 @@ function CadastroVideo() {
                     type='select'
                     value={valores.categoria}
                     categoryList={categoriasCadastradas}
-                    onChange={handleMudancas}
+                    onChange={(e) => handleMudancas('categoria', e)}
                 />
 
                 <Button>Cadastrar</Button>

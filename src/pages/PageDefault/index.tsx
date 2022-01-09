@@ -14,17 +14,19 @@ const Main = styled.main`
         return (
             !isHomePage &&
             css`
-                @media (max-width: 800px) {
-                    padding-top: 50px;
-                    padding-left: 5%;
-                    padding-right: 5%;
-                }
+                padding-top: 50px;
+                padding-left: 5%;
+                padding-right: 5%;
             `
         );
     }}
 `;
 
-function PageDefault({ children }) {
+type PageDefaultProps = {
+    children: React.ReactNode;
+};
+
+function PageDefault({ children }: PageDefaultProps) {
     return (
         <>
             <Menu />

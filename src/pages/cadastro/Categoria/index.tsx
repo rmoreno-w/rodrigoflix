@@ -5,22 +5,23 @@ import FormField from '../../../components/FormField';
 import Button from '../../../components/Button';
 import useForm from '../../../hooks';
 import categoriasRepository from '../../../repositories/categorias';
+import { Categoria } from '../../../hooks';
 
 function CadastroCategoria() {
-    const objInicialCategorias = {
+    const objInicialCategorias: Categoria = {
         titulo: '',
         descricao: '',
         cor: '#624CAB',
     };
 
-    const [categorias, setCategorias] = useState([]);
     const { valores, handleMudancas, limpaInputsFormulario } = useForm(objInicialCategorias);
+    const [categorias, setCategorias] = useState<Categoria[]>([]);
 
     useEffect(() => {
         categoriasRepository
             .getAllCategsWithVideos()
-            .then((categoria) => {
-                setCategorias(categoria);
+            .then((categoriasRecebidas: Categoria[]) => {
+                setCategorias(categoriasRecebidas);
             })
             .catch((error) => {
                 console.log('TRATAR ERRO AQUI');
@@ -31,7 +32,7 @@ function CadastroCategoria() {
         <PageDefault>
             <h1>
                 Cadastro de Categoria
-                {categorias.titulo}
+                {valores.titulo}
             </h1>
 
             <form
@@ -47,7 +48,7 @@ function CadastroCategoria() {
                     name='titulo'
                     type='text'
                     value={valores.titulo}
-                    onChange={handleMudancas}
+                    onChange={(e: any) => handleMudancas('titulo', e)}
                 />
 
                 <FormField
@@ -55,10 +56,16 @@ function CadastroCategoria() {
                     name='descricao'
                     type='textarea'
                     value={valores.descricao}
-                    onChange={handleMudancas}
+                    onChange={(e: any) => handleMudancas('descricao', e)}
                 />
 
-                <FormField label='Cor' name='cor' type='color' value={valores.cor} onChange={handleMudancas} />
+                <FormField
+                    label='Cor'
+                    name='cor'
+                    type='color'
+                    value={valores.cor}
+                    onChange={(e: any) => handleMudancas('cor', e)}
+                />
 
                 <Button>Cadastrar</Button>
             </form>

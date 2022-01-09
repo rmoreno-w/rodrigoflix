@@ -1,28 +1,34 @@
 import React from 'react';
 import VideoIframeResponsive from './components/VideoIframeResponsive';
-import { BannerMainContainer, ContentAreaContainer, WatchButton } from './styles';
+import { BannerMainContainer, ContentAreaContainer, Description, Item, Title, WatchButton } from './styles';
 
-function getYouTubeId(youtubeURL) {
+function getYouTubeId(youtubeURL: string) {
     return youtubeURL.replace(/^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/, '$7');
 }
 
-export default function BannerMain({ videoTitle, videoDescription, url }) {
+type BannerProps = {
+    videoTitle: string;
+    videoDescription: string;
+    url: string;
+};
+
+export default function BannerMain({ videoTitle, videoDescription, url }: BannerProps) {
     const youTubeID = getYouTubeId(url);
     const bgUrl = `https://img.youtube.com/vi/${youTubeID}/maxresdefault.jpg`;
 
     return (
         <BannerMainContainer backgroundImage={bgUrl}>
             <ContentAreaContainer>
-                <ContentAreaContainer.Item>
-                    <ContentAreaContainer.Title>{videoTitle}</ContentAreaContainer.Title>
+                <Item>
+                    <Title>{videoTitle}</Title>
 
-                    <ContentAreaContainer.Description>{videoDescription}</ContentAreaContainer.Description>
-                </ContentAreaContainer.Item>
+                    <Description>{videoDescription}</Description>
+                </Item>
 
-                <ContentAreaContainer.Item>
+                <Item>
                     <VideoIframeResponsive youtubeID={youTubeID} />
                     <WatchButton>Assistir</WatchButton>
-                </ContentAreaContainer.Item>
+                </Item>
             </ContentAreaContainer>
         </BannerMainContainer>
     );
