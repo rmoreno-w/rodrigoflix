@@ -44,7 +44,10 @@ export const NavBar = styled.nav`
     }
 `;
 
-export const ButtonLinkk = styled(ButtonLink)`
+export const ButtonLinkk = styled(ButtonLink)<{
+    isCurrentPageCadastro: boolean;
+}>`
+    visibility: ${(props) => (props.isCurrentPageCadastro ? 'hidden' : 'visible')};
     color: var(--white);
     border: 1px solid var(--white);
     cursor: pointer;
@@ -64,15 +67,13 @@ export const ButtonLinkk = styled(ButtonLink)`
     }
 
     @media (max-width: 800px) {
-        a.ButtonLink {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--primary);
-            border-radius: 0;
-            border: 0;
-            text-align: center;
-        }
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--primary);
+        border-radius: 0;
+        border: 0;
+        text-align: center;
     }
 `;

@@ -4,7 +4,7 @@ import PageDefault from '../PageDefault';
 import SVGContainer from '../../components/SVGContainer';
 import { ReactComponent as ErrorImage } from '../../assets/images/404Error.svg';
 
-const ErrorPage = styled.main`
+const ErrorPage = styled.section`
     display: flex;
     flex-direction: column;
     justify-content: center;

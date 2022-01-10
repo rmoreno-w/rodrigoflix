@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import Button from '../../../components/Button';
+import { Button, ButtonContainer, ClearButton } from '../../../components/Buttons';
 import FormField from '../../../components/FormField';
 import useForm from '../../../hooks';
 import PageDefault from '../../PageDefault';
@@ -10,7 +10,7 @@ import { Categoria } from '../../../components/Carousel';
 
 function CadastroVideo() {
     const history = useHistory();
-    const { handleMudancas, valores } = useForm({
+    const { handleMudancas, limpaInputsFormulario, valores } = useForm({
         titulo: '',
         url: '',
         categoria: '',
@@ -89,7 +89,12 @@ function CadastroVideo() {
                     onChange={(e) => handleMudancas('categoria', e)}
                 />
 
-                <Button>Cadastrar</Button>
+                <ButtonContainer>
+                    <Button>Cadastrar</Button>
+                    <ClearButton onClick={limpaInputsFormulario} type='button'>
+                        Limpar
+                    </ClearButton>
+                </ButtonContainer>
             </form>
 
             <Link to='/cadastro/categoria'>Cadastrar Categoria</Link>

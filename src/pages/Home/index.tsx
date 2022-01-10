@@ -31,7 +31,7 @@ function Home() {
                         videoTitle='Entrevista Gaulês - Flow Podcast'
                     />
                     {dadosIniciais.map((_, index) => (
-                        <Carousel key={index} category={dadosIniciais[index]} />
+                        <Carousel key={`carrousel__${index}`} category={dadosIniciais[index]} />
                     ))}
                 </>
             )}

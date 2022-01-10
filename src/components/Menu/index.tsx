@@ -10,7 +10,11 @@ function Menu() {
                 <Logo src={RodrigoFlix} alt='RodrigoFlix Logo' />
             </Link>
 
-            <ButtonLinkk to='/cadastro/Video' className='ButtonLink'>
+            <ButtonLinkk
+                to='/cadastro/Video'
+                className='ButtonLink'
+                isCurrentPageCadastro={window.location.pathname.includes('cadastro')}
+            >
                 Novo Vídeo
             </ButtonLinkk>
         </NavBar>
