@@ -18,7 +18,7 @@ const getAllCategsWithVideos = () =>
         if (respostaDoServidor.ok) {
             const respostaConvertidaDoServidor = await respostaDoServidor.json();
 
-            console.log(respostaConvertidaDoServidor);
+            // console.log(respostaConvertidaDoServidor);
             return respostaConvertidaDoServidor;
         }
 

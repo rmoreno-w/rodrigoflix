@@ -22,7 +22,7 @@ function CadastroCategoria() {
         categoriasRepository
             .getAllCategsWithVideos()
             .then((categoriasRecebidas: CategoriaCompleta[]) => {
-                console.log(categoriasRecebidas);
+                // console.log(categoriasRecebidas);
                 // const categoriasSimplificadas: Categoria[] = [];
                 // categoriasRecebidas.forEach((categoria) => {
                 //     categoriasSimplificadas.push({
@@ -34,7 +34,7 @@ function CadastroCategoria() {
                 setCategorias(categoriasRecebidas);
             })
             .catch((error) => {
-                console.log('TRATAR ERRO AQUI');
+                console.log(`Error getting categories ${error}`);
             });
     }, []);
 

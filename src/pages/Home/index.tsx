@@ -11,7 +11,7 @@ function Home() {
         categoriasRepository
             .getAllCategsWithVideos()
             .then((categorias) => {
-                console.log(categorias);
+                // console.log(categorias);
                 setDadosIniciais(categorias);
             })
             .catch((error) => {
@@ -31,6 +31,7 @@ function Home() {
                         videoTitle='Entrevista Gaulês - Flow Podcast'
                     />
                     {dadosIniciais.map((_, index) => (
+                        // eslint-disable-next-line react/no-array-index-key
                         <Carousel key={`carrousel__${index}`} category={dadosIniciais[index]} />
                     ))}
                 </>
