@@ -1,6 +1,6 @@
 import config from '../config';
 
-const CATEGORIES_URL = `${config.URL_BACKEND}/categorias`;
+const CATEGORIES_URL = `${config.URL_BACKEND}/categories`;
 
 const getAllCategs = () =>
     fetch(CATEGORIES_URL).then(async (respostaDoServidor) => {
